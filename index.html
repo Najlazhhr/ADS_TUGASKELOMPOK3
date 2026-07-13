@@ -1,0 +1,453 @@
+  <!DOCTYPE html>
+  <html lang="id">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisis Penyebab Kematian di Indonesia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  </head>
+  <body data-theme="light">
+
+  <!-- ============ HEADER / NAV ============ -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.2-4.6-9.8-9.1C.7 8.6 2 4.9 5.5 4c2.1-.5 3.9.4 5 2 .9-1.6 2.9-2.5 5-2 3.5.9 4.8 4.6 3.3 7.9C19.2 16.4 12 21 12 21z" fill="currentColor"/><path d="M4 11h3.2l1.4-2.6L10.6 14l1.6-4.4L13.4 11H20" stroke="#101B3B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand-text">Analisis Penyebab Kematian <b>di Indonesia</b></span>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <button class="nav-link active" data-page="home">Home</button>
+        <button class="nav-link" data-page="tentang">Tentang</button>
+        <button class="nav-link" data-page="dataset">Dataset</button>
+        <button class="nav-link" data-page="hasil">Hasil</button>
+        <button class="nav-link" data-page="kesimpulan">Kesimpulan</button>
+        <button class="nav-link" data-page="tim">Tim</button>
+      </nav>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Ganti tema gelap/terang" title="Ganti tema">
+          <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+        </button>
+        <button class="icon-btn nav-burger" id="navBurger" aria-label="Buka menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app">
+
+  <!-- ============ PAGE: HOME ============ -->
+  <section class="page active" id="page-home">
+
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Kelompok 3 &middot; Analisis Data Statistik</p>
+        <h1>Analisis Penyebab <span class="accent">Kematian di Indonesia</span></h1>
+        <p class="hero-desc">Website ini menyajikan hasil analisis data penyebab kematian di Indonesia berdasarkan data statistik resmi untuk mengidentifikasi pola, perbedaan, dan faktor yang berkaitan dengan penyebab kematian di berbagai wilayah.</p>
+        <button class="btn btn-primary" data-goto="hasil">Lihat Analisis
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="hero-art">
+        <div class="hero-panel">
+          <div class="hero-highlight" id="heroHighlight">
+            <div class="hero-highlight-track" id="heroHighlightTrack"></div>
+            <div class="hero-highlight-dots" id="heroHighlightDots"></div>
+            <button class="hero-highlight-link" data-goto-scroll="indoMap">Lihat Peta
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div><p class="stat-value" id="totalDataHome" data-count="322">0</p><p class="stat-label">Total Data <span>data kematian</span></p></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <div><p class="stat-value" id="periodeDataHome">2000&ndash;2010</p><p class="stat-label">Periode Data <span id="periodeDataSubHome">11 tahun</span></p></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21.2 15a9 9 0 1 1-9.2-13"/><path d="M12 2v10l7 5"/></svg>
+        </div>
+        <div><p class="stat-value" id="kategoriPenyebabHome">126</p><p class="stat-label">Kategori Penyebab <span id="kategoriPenyebabSubHome">3 tipe utama</span></p></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div><p class="stat-value">34</p><p class="stat-label">Wilayah <span>Provinsi</span></p></div>
+      </div>
+    </section>
+
+    <section class="card map-card">
+      <div class="map-card-head">
+        <div>
+          <h3>Peta Sebaran Kematian Indonesia</h3>
+          <p class="map-card-sub">Geser dan zoom peta, lalu arahkan kursor atau ketuk provinsi untuk melihat estimasi jumlah kematian.</p>
+        </div>
+      </div>
+      <div class="indo-map-wrap">
+        <div id="indoMap"></div>
+        <div class="map-zoom-hint" id="mapZoomHint">Klik peta untuk mengaktifkan zoom scroll</div>
+      </div>
+      <div class="legend-scale">
+        <span>Rendah</span>
+        <span class="scale-bar"></span>
+        <span>Tinggi</span>
+      </div>
+      <p class="map-caption">*Estimasi distribusi ilustratif berdasarkan proporsi tren nasional. Dataset asli tidak mencantumkan rincian lokasi per kota/provinsi.</p>
+    </section>
+
+    <section class="home-grid">
+      <div class="card">
+        <h3>Penyebab Kematian Paling Sering Tercatat</h3>
+        <div class="chart-wrap chart-tall"><canvas id="topCausesChart"></canvas></div>
+        <p class="chart-note">Diurutkan berdasarkan jumlah tahun kemunculan tiap penyebab dalam data (bukan total jumlah kematian).</p>
+      </div>
+      <div class="card about-card">
+        <h3>Tentang Proyek</h3>
+        <p>Proyek ini dibuat untuk memenuhi tugas mata kuliah Analisis Data Statistik. Data bersumber dari publikasi resmi pemerintah dan dianalisis menggunakan metode statistik deskriptif, korelasi, ANOVA, dan regresi linear.</p>
+        <button class="btn btn-outline" data-goto="tentang">Selengkapnya</button>
+      </div>
+    </section>
+
+  </section>
+
+<!-- ============ PAGE: TENTANG ============ -->
+<section class="page" id="page-tentang">
+  <section class="page-hero">
+    <p class="eyebrow">Tentang Penelitian</p>
+    <h1>Tentang <span class="accent">Penelitian</span></h1>
+    <p class="page-hero-desc">Penelitian ini bertujuan menganalisis pola penyebab kematian di Indonesia dengan menggunakan pendekatan statistik deskriptif, analisis korelasi, ANOVA, dan regresi linear sehingga diperoleh gambaran hubungan antar variabel serta karakteristik data penyebab kematian.</p>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">Tujuan Penelitian</h2>
+    <div class="goal-grid">
+      <div class="goal-card">
+        <div class="stat-icon icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.7" fill="currentColor"/></svg></div>
+        <p>Mengidentifikasi pola penyebab kematian terbanyak di Indonesia</p>
+      </div>
+      <div class="goal-card">
+        <div class="stat-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8 7.4 16 7.4M7.6 8 10.7 16M16.4 8 13.3 16"/></svg></div>
+        <p>Menganalisis hubungan antar variabel seperti tahun, penyebab, dan jumlah kematian</p>
+      </div>
+      <div class="goal-card">
+        <div class="stat-icon icon-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M12 20V4M20 20v-7"/></svg></div>
+        <p>Menguji perbedaan rata-rata kematian antar jenis penyebab</p>
+      </div>
+      <div class="goal-card">
+        <div class="stat-icon icon-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+        <p>Membangun model regresi untuk melihat pengaruh waktu terhadap jumlah kematian</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">Metode Analisis</h2>
+    <div class="method-row">
+      <div class="method-step"><div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><p>Pengumpulan<br>Data</p></div>
+      <span class="method-arrow">→</span>
+      <div class="method-step"><div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 20 9 9M4 15l5-5 4 4-5 5-4-4z"/><path d="M14.5 4.5 19.5 9.5"/></svg></div><p>Pembersihan<br>Data</p></div>
+      <span class="method-arrow">→</span>
+      <div class="method-step"><div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.3 3.9 2.9 18a1 1 0 0 0 .9 1.5h16.4a1 1 0 0 0 .9-1.5L13.7 3.9a1 1 0 0 0-1.7 0z"/><path d="M12 9v4M12 16.2v.2"/></svg></div><p>Deteksi<br>Outlier</p></div>
+      <span class="method-arrow">→</span>
+      <div class="method-step"><div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V10M10 19V4M16 19v-7M22 19H2"/></svg></div><p>Statistika<br>Deskriptif</p></div>
+      <span class="method-arrow">→</span>
+      <div class="method-step"><div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 15l4-6 3 3 5-8"/></svg></div><p>Analisis<br>Korelasi</p></div>
+      <span class="method-arrow">→</span>
+      <div class="method-step"><div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M6 17 11 9l3 3 5-7"/></svg></div><p>Regresi<br>Linear</p></div>
+      <span class="method-arrow">→</span>
+      <div class="method-step"><div class="method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V10M9 21V6M15 21v-9M21 21V3"/></svg></div><p>ANOVA</p></div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ PAGE: DATASET ============ -->
+<section class="page" id="page-dataset">
+  <section class="page-hero small">
+    <h1>Dataset</h1>
+    <p class="page-hero-desc">Data yang digunakan bersumber dari publikasi resmi Kementerian Kesehatan Republik Indonesia.</p>
+  </section>
+
+  <div class="dataset-layout">
+    <div class="dataset-side card">
+      <div class="dataset-illustration">
+        <svg viewBox="0 0 120 120" fill="none">
+          <ellipse cx="60" cy="100" rx="40" ry="8" fill="var(--blue-100)"/>
+          <path d="M30 40c0-11 13-20 30-20s30 9 30 20-13 20-30 20-30-9-30-20z" fill="var(--blue)"/>
+          <path d="M30 40v40c0 11 13 20 30 20s30-9 30-20V40" fill="var(--blue-600)"/>
+          <ellipse cx="60" cy="40" rx="30" ry="10" fill="var(--blue-300)"/>
+          <path d="M42 62h10M42 72h16M42 82h8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <button class="btn btn-primary full" id="downloadDatasetBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download Dataset
+      </button>
+    </div>
+
+    <div class="dataset-main">
+      <div class="mini-stat-row">
+        <div class="mini-stat"><span class="mini-icon icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span><div><b id="totalDataDataset">322</b><small>Jumlah Data</small></div></div>
+        <div class="mini-stat"><span class="mini-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><div><b>8</b><small>Jumlah Variabel</small></div></div>
+        <div class="mini-stat"><span class="mini-icon icon-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><div><b id="periodeDataVal">2000&ndash;2010</b><small>Periode Data</small></div></div>
+        <div class="mini-stat wide"><span class="mini-icon icon-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M5 12H3M21 12h-2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></svg></span><div><b>Kementerian Kesehatan RI</b><small>Sumber Data</small></div></div>
+      </div>
+
+      <div class="card">
+        <h3>Preview Data</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Cause</th><th>Type</th><th>Year</th><th>Total Deaths</th><th>Source</th></tr></thead>
+            <tbody>
+              <tr><td>AIDS</td><td>Bencana Non Alam dan Penyakit</td><td>2000</td><td>47</td><td>Profil Kesehatan Indonesia</td></tr>
+              <tr><td>AIDS</td><td>Bencana Non Alam dan Penyakit</td><td>2001</td><td>99</td><td>Profil Kesehatan Indonesia</td></tr>
+              <tr><td>AIDS</td><td>Bencana Non Alam dan Penyakit</td><td>2002</td><td>100</td><td>Profil Kesehatan Indonesia</td></tr>
+              <tr><td>AIDS</td><td>Bencana Non Alam dan Penyakit</td><td>2003</td><td>261</td><td>Profil Kesehatan Indonesia</td></tr>
+              <tr><td>AIDS</td><td>Bencana Non Alam dan Penyakit</td><td>2004</td><td>361</td><td>Profil Kesehatan Indonesia</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE: HASIL ============ -->
+<section class="page" id="page-hasil">
+  <section class="page-hero small">
+    <h1>Hasil Analisis</h1>
+    <p class="page-hero-desc">Eksplorasi visual dari <span id="dataBersihCount">289</span> data bersih (2000&ndash;2010) serta ringkasan statistik dari seluruh pengujian yang dilakukan terhadap data penyebab kematian.</p>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">Eksplorasi Data</h2>
+    <div class="analysis-grid">
+
+      <div class="card">
+        <div class="card-head"><h3>Rata-rata Kematian per Tipe</h3><span class="card-tag">Bar</span></div>
+        <p class="card-desc">Perbandingan rata-rata jumlah kematian pada tiap kategori tipe penyebab (data setelah outlier dihapus).</p>
+        <div class="chart-wrap chart-tall"><canvas id="meanTypeChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Boxplot per Tipe</h3><span class="card-tag">Sebaran</span></div>
+        <p class="card-desc">Kotak menunjukkan Q1&ndash;Q3, garis tengah median, titik adalah outlier per kelompok (skala linear, data setelah dibersihkan).</p>
+        <div class="chart-wrap chart-tall"><svg class="svg-chart" id="boxplotSvg" viewBox="0 0 320 230" preserveAspectRatio="xMidYMid meet"></svg></div>
+      </div>
+
+      <div class="card span-2">
+        <div class="card-head"><h3>Top 10 Penyebab Kematian Spesifik</h3><span class="card-tag">Cause &middot; Setelah Outlier Dihapus</span></div>
+        <p class="card-desc">Sepuluh penyebab kematian spesifik (Cause) yang paling sering tercatat pada data bersih.</p>
+        <div class="chart-wrap chart-big"><canvas id="topCausesChartHasil"></canvas></div>
+      </div>
+
+      <div class="card span-2">
+        <div class="card-head"><h3>Heatmap Korelasi &amp; Scatter Plot</h3><span class="card-tag">Year &times; Total Deaths</span></div>
+        <p class="card-desc">Korelasi Pearson antara Year dan Total Deaths (data bersih), beserta sebaran titik datanya.</p>
+        <div class="paired-charts">
+          <div class="chart-wrap chart-tall"><div class="heatmap" id="heatmapCorr"></div></div>
+          <div class="chart-wrap chart-tall"><canvas id="scatterPlainChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="card span-2">
+        <div class="card-head"><h3>Distribusi &amp; Tren Total Kematian</h3><span class="card-tag">2000&ndash;2010 &middot; Setelah Outlier Dihapus</span></div>
+        <p class="card-desc">Distribusi nilai Total Deaths (dengan kurva KDE) dan tren jumlah total kematian per tahun beserta selang kepercayaan 95%.</p>
+        <div class="paired-charts">
+          <div class="chart-wrap chart-tall"><canvas id="histogramChart"></canvas></div>
+          <div class="chart-wrap chart-tall"><canvas id="trendTotalChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="card span-2">
+        <div class="card-head"><h3>Scatter Plot &amp; Garis Regresi</h3><span class="card-tag">Total Deaths ~ Year</span></div>
+        <p class="card-desc">Setiap titik biru adalah satu baris data (setelah outlier dihapus); garis merah adalah hasil regresi linear sederhana dengan selang kepercayaan 95% (R&sup2; = 0,26%).</p>
+        <div class="chart-wrap chart-big"><canvas id="scatterChart"></canvas></div>
+      </div>
+
+      <div class="card span-2">
+        <div class="card-head"><h3>Regresi Linear Multiple</h3><span class="card-tag">Aktual vs Prediksi</span></div>
+        <p class="card-desc">Prediksi Total Deaths dari model Year + Type. Titik yang mendekati garis diagonal menandakan prediksi yang akurat.</p>
+        <div class="chart-wrap chart-big"><canvas id="regMultiChartEDA"></canvas></div>
+      </div>
+
+      <div class="card span-2">
+        <div class="card-head"><h3>Tren Total Kematian per Tahun, per Tipe Penyebab</h3><span class="card-tag">Line &middot; Setelah Outlier Dihapus</span></div>
+        <p class="card-desc">Arahkan kursor ke titik untuk melihat angka tiap tahun.</p>
+        <div class="chart-wrap chart-big"><canvas id="trendByTypeChart"></canvas></div>
+      </div>
+
+      <div class="card span-2">
+        <div class="card-head"><h3>Post Hoc Tukey HSD</h3><span class="card-tag">Rata-rata &amp; CI per tipe</span></div>
+        <p class="card-desc" id="capPosthoc">Memuat interpretasi&hellip;</p>
+        <div class="chart-wrap chart-tall"><svg class="svg-chart" id="tukeySvg" viewBox="0 0 320 170" preserveAspectRatio="xMidYMid meet"></svg></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">Ringkasan Statistik</h2>
+
+  <div class="result-grid">
+    <div class="card result-card">
+      <p class="result-label">1. Statistik Deskriptif <small>(Total Deaths)</small></p>
+      <div class="result-rows">
+        <div><span>Mean</span><b id="statMean">&ndash;</b></div>
+        <div><span>Std Dev</span><b id="statStd">&ndash;</b></div>
+      </div>
+      <p class="result-caption">Distribusi jumlah kematian tidak merata pada setiap kategori penyebab kematian.</p>
+    </div>
+
+    <div class="card result-card">
+      <p class="result-label">2. Korelasi <small>(Year vs Total Deaths)</small></p>
+      <p class="result-big" id="statCorr">r = &ndash;</p>
+      <p class="result-note" id="statCorrNote">Hubungan sangat lemah</p>
+      <p class="result-caption" id="capCorr">Memuat interpretasi&hellip;</p>
+    </div>
+
+    <div class="card result-card">
+      <p class="result-label">3. Regresi Linear Sederhana <small>(Total Deaths ~ Year)</small></p>
+      <div class="result-rows">
+        <div><span>R&sup2;</span><b id="statR2Simple">&ndash;</b></div>
+        <div><span>Slope</span><b id="statSlope">&ndash;</b></div>
+      </div>
+      <p class="result-caption" id="capRegSimple">Memuat interpretasi&hellip;</p>
+    </div>
+
+    <div class="card result-card">
+      <p class="result-label">4. Regresi Linear Multiple <small>(Year, Type &amp; Cause &mdash; Aktual vs Prediksi)</small></p>
+      <p class="result-big" id="statR2Multi">R&sup2; = &ndash;</p>
+      <p class="result-note" id="statR2MultiNote">Model signifikan</p>
+      <p class="result-caption" id="capRegMulti">Memuat interpretasi&hellip;</p>
+    </div>
+
+    <div class="card result-card span-2">
+      <p class="result-label">5. One-Way ANOVA <small>(berdasarkan Type)</small></p>
+      <div class="result-rows">
+        <div><span>F-statistic</span><b id="statF">&ndash;</b></div>
+        <div><span>p-value</span><b id="statP">&ndash;</b></div>
+        <div><span>Status</span><b id="statAnovaStatus">&ndash;</b></div>
+      </div>
+      <p class="result-caption" id="capAnova">Memuat interpretasi&hellip;</p>
+    </div>
+  </div>
+
+  <div class="card interp-card">
+    <h3>Interpretasi Singkat</h3>
+    <p id="interpText">Memuat interpretasi&hellip;</p>
+  </div>
+  </section>
+</section>
+
+<!-- ============ PAGE: KESIMPULAN ============ -->
+<section class="page" id="page-kesimpulan">
+  <section class="page-hero small">
+    <h1>Kesimpulan Penelitian</h1>
+  </section>
+
+  <div class="conclusion-grid">
+    <div class="card">
+      <ul class="check-list">
+        <li id="concTotal">Total data awal sebanyak 680 data dengan 8 variabel.</li>
+        <li id="concBersih">Setelah difilter ke tahun 2000&ndash;2010 dan dibersihkan dari outlier, tersisa 289 data siap analisis.</li>
+        <li id="concCorr">Korelasi antara tahun dan jumlah kematian menunjukkan hubungan negatif sangat lemah.</li>
+        <li id="concAnova">Uji ANOVA menunjukkan hasil perbedaan rata-rata kematian antar tipe penyebab.</li>
+        <li id="concRegSimple">Model regresi linear menunjukkan pengaruh waktu terhadap jumlah kematian sangat kecil.</li>
+        <li id="concRegMulti">Model regresi berdasarkan penyebab kematian memiliki kemampuan prediksi yang jauh lebih baik.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Rekomendasi</h3>
+      <div class="reco-grid">
+        <div class="reco-item"><span class="mini-icon icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><p>Tambahkan variabel lain yang relevan seperti usia, wilayah, dan faktor lain.</p></div>
+        <div class="reco-item"><span class="mini-icon icon-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></span><p>Gunakan data terbaru agar analisis dapat diperbarui secara berkala.</p></div>
+        <div class="reco-item"><span class="mini-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span><p>Pertimbangkan metode Machine Learning untuk prediksi yang lebih akurat.</p></div>
+        <div class="reco-item"><span class="mini-icon icon-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><p>Hasil analisis dapat digunakan sebagai bahan pertimbangan kebijakan kesehatan.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE: TIM ============ -->
+<section class="page" id="page-tim">
+  <section class="page-hero small">
+    <h1>KELOMPOK 3 </h1>
+    <p class="page-hero-desc">&middot; Analisis Data Statistik</p>
+  </section>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="avatar" style="--av:#2F6FED;"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+      <b>Arzethia Aisyiah Gozalie</b>
+      <span class="team-role">NIM : 0102525004</span>
+      <div class="team-social">
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="avatar" style="--av:#7B6EF6;"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+      <b>Shallum Angella Trixie Anggely</b>
+      <span class="team-role">NIM : 0102525019</span>
+      <span class="team-sub">&nbsp;</span>
+      <div class="team-social">
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="avatar" style="--av:#16A34A;"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+      <b>Najla Mutia Azzahra</b>
+      <span class="team-role">NIM : 0102525012</span>
+      <span class="team-sub">&nbsp;</span>
+      <div class="team-social">
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="avatar" style="--av:#F59E0B;"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+      <b>Muhammad Faris Haidar</b>
+      <span class="team-role">NIM : 0102524027</span>
+      <span class="team-sub">&nbsp;</span>
+      <div class="team-social">
+      </div>
+    </div>
+  </div>
+
+  <div class="card tasks-card">
+    <h3>Pembagian Tugas</h3>
+    <ul class="check-list">
+      <li>Pengumpulan &amp; Cleaning Data</li>
+      <li>Analisis Statistik (ANOVA, Korelasi, Regresi)</li>
+      <li>Visualisasi Data</li>
+      <li>Web Development</li>
+      <li>Dokumentasi &amp; Presentasi</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2026 Analisis Penyebab Kematian di Indonesia &middot; Kelompok 3, Analisis Data Statistik</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+<script src="death_data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
